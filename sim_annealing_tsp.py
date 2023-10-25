@@ -1,4 +1,3 @@
-import sys
 import itertools
 import random
 import math
