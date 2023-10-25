@@ -16,7 +16,7 @@ def total_distance(path, distances):
 
 def simulated_annealing_tsp(cities, distances, max_iterations, initial_temperature):
     num_cities = len(cities)
-    current_solution = random.sample(cities, num_cities)  # Start with a random initial solution
+    current_solution = random.sample(range(num_cities), num_cities)  # Start with a random initial solution
     best_solution = current_solution[:]
     current_distance = total_distance(current_solution, distances)
     best_distance = current_distance
@@ -54,8 +54,8 @@ if __name__ == "__main__":
 
     num_cities = len(cities)
 
-    # Generate random distances between cities as a 2D matrix
-    distances = [[0] * num_cities for _ in range(num_cities)]
+    # Generate the distance matrix with actual distances between cities
+    distances = np.zeros((num_cities, num_cities))
     for i in range(num_cities):
         for j in range(i + 1, num_cities):
             distances[i][j] = distances[j][i] = calculate_distance(cities[i], cities[j])
@@ -63,6 +63,7 @@ if __name__ == "__main__":
     max_iterations = 10000
     initial_temperature = 1000.0
     
-    final_solution, total_dist = simulated_annealing_tsp(cities, distances, max_iterations, initial_temperature)
-    print("Optimal Path:", final_solution)
+    final_solution, total_dist = simulated_annealing_tsp(list(range(num_cities)), distances, max_iterations, initial_temperature)
+    final_path = [cities[i] for i in final_solution]  # Convert solution indices to city coordinates
+    print("Optimal Path:", final_path)
     print("Total Distance:", total_dist)
